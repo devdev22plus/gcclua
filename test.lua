@@ -1,5 +1,5 @@
-a = 11;
-print("HI!!!!" .. string.format("%d", a));
+require "header";
+
 
 function main()
 	local firstNumber, secondNumber = dummyNumber();
@@ -47,6 +47,40 @@ function main()
 	end
 	endClock();
 
+	function cck(ll)
+		ll()
+	end
+
+	ee = function()
+		print "aaa";
+	end
+
+	cck(function()
+		print "bbb";
+	end);
+
+	cck(ee);
+
+	local testTable = {w = 50, h = 100}
+	-- print(testTable);
+
+	print(dump(testTable));
+
+	print("ggg");
+
+	zz = {}
+	zz["e"] = 33;
+	zz["d"] = 55;
+	print(dump(zz));
+
+
+	print(dump({22, 44, 55, 77,}));
+
+	local llzz = {22, 44, 55, 77,};
+	print(#llzz);
 
 end
+
+a = 11;
+print("HI!!!!" .. string.format("%d", a));
 
