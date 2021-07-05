@@ -14,7 +14,8 @@ fi
 if [[ "$1" == 'macosx' ]];
 then
 	# work on macosx
-	gcc -o test main.cpp -lstdc++ -std=c++11 -I./lua54/include/ -L./lua54/ -llua -lm
+	gcc -o test main.cpp -lstdc++ -std=c++11 -I./lua54/include/ -L./lua54/ -llua -lm -I./redisclient/src -L./redisclient/lib/mac/
+	# gcc -o test main.cpp -lstdc++ -std=c++11 -I./lua54/include/ -L./lua54/ -llua -lm -I./redisclient/src -L./redisclient/lib/mac/ -lhiredis
 elif [[ "$1" == 'linux' ]];
 then
 	# work on linux
