@@ -79,6 +79,19 @@ function main()
 	local llzz = {22, 44, 55, 77,};
 	print(#llzz);
 
+
+	print("===================== test dummyListMap")
+	print(dump(dummyListMap()));
+
+	for k, v in pairs(dummyListMap()) do
+		print( k );
+		-- print( v );
+		-- print(dump(v))
+		for k2, v2 in pairs(v) do
+			print("|_ key: " .. k2 .. "(" .. type(k2) .. ")" .. ", value: " .. v2 .. "(" .. type(v2) .. ")");
+		end
+	end
+
 end
 
 a = 11;

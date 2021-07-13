@@ -100,10 +100,39 @@ int main(void)
 		return 1;
 	};
 
+
+
+	auto dummyListMap = [](lua_State*L) -> int{;
+		lua_newtable(L);
+		int list = lua_gettop(L);
+
+		for(int i = 0 ; i < 10 ; ++i)
+		{
+			lua_newtable(L);
+			int map = lua_gettop(L);
+
+			for(int n = 0 ; n < 2 ; ++n)
+			{
+				std::string s = std::to_string(n);
+				lua_pushlstring(L, s.c_str(), s.length());
+				lua_pushnumber(L, n + 100 * i);
+				lua_settable(L, map);
+			}
+
+			/* lua_pushvalue(L, -1); */
+			lua_rawseti(L, list, i + 1); // lua_rawseti can't begin start at 0
+		}
+
+		return 1;
+	};
+
+
+
 	lua_register(L, "dummyNumber", dummyNumber);
 	lua_register(L, "dummyData", dummyData);
 	lua_register(L, "dummyList", dummyList);
 	lua_register(L, "dummyMap", dummyMap);
+	lua_register(L, "dummyListMap", dummyListMap);
 	lua_register(L, "TestFunc", _TestFunc);
 	lua_register(L, "startClock", _StartClock);
 	lua_register(L, "endClock", _EndClock);
