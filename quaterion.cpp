@@ -115,6 +115,26 @@ public:
     z /= s;
     return *this;
   }
+
+  Vector3 operator*(Quaternion rotation) const {
+    float num = rotation.x * 2.0f;
+    float num2 = rotation.y * 2.0f;
+    float num3 = rotation.z * 2.0f;
+    float num4 = rotation.x * num;
+    float num5 = rotation.y * num2;
+    float num6 = rotation.z * num3;
+    float num7 = rotation.x * num2;
+    float num8 = rotation.x * num3;
+    float num9 = rotation.y * num3;
+    float num10 = rotation.w * num;
+    float num11 = rotation.w * num2;
+    float num12 = rotation.w * num3;
+    Vector3 result;
+    result.x = (1.0f - (num5 + num6)) * x + (num7 - num12) * y + (num8 + num11) * z;
+    result.y = (num7 + num12) * x + (1.0f - (num4 + num6)) * y + (num9 - num10) * z;
+    result.z = (num8 - num11) * x + (num9 + num10) * y + (1.0f - (num4 + num5)) * z;
+    return result;
+  }
 };
 
 
@@ -159,8 +179,40 @@ public:
 	  q.z = (xaxis.y - yaxis.x) * w4_recip;
 	  return q;
 	}
-};
 
+	static Quaternion identity() {
+		return {0.0f, 0.0f, 0.0f, 1.0f};
+	}
+
+	Quaternion operator*(Quaternion other) {
+		Quaternion result;
+		result.x = w * other.x + x * other.w + y * other.z - z * other.y;
+		result.y = w * other.y + y * other.w + z * other.x - x * other.z;
+		result.z = w * other.z + z * other.w + x * other.y - y * other.x;
+		result.w = w * other.w - x * other.x - y * other.y - z * other.z;
+		return result;
+	}
+
+	Vector3 operator*(Vector3 point) const {
+		float num = x * 2.0f;
+		float num2 = y * 2.0f;
+		float num3 = z * 2.0f;
+		float num4 = x * num;
+		float num5 = y * num2;
+		float num6 = z * num3;
+		float num7 = x * num2;
+		float num8 = x * num3;
+		float num9 = y * num3;
+		float num10 = w * num;
+		float num11 = w * num2;
+		float num12 = w * num3;
+		Vector3 result;
+		result.x = (1.0f - (num5 + num6)) * point.x + (num7 - num12) * point.y + (num8 + num11) * point.z;
+		result.y = (num7 + num12) * point.x + (1.0f - (num4 + num6)) * point.y + (num9 - num10) * point.z;
+		result.z = (num8 - num11) * point.x + (num9 + num10) * point.y + (1.0f - (num4 + num5)) * point.z;
+		return result;
+	}
+};
 
 int main() {
 	/* Vector3 euler = {0, 0, 150}; */
@@ -174,6 +226,16 @@ int main() {
 
 	q = Quaternion::LookRotation(euler, result);
 	std::cout << "(" << q.x << ", " << q.y << ", " << q.z << ", " << q.w << ")" << std::endl;
+
+
+	Quaternion q1 = {1, 2, 3, 4};
+	Quaternion q2 = {5, 6, 7, 8};
+	Quaternion q3 = q1 * q2;
+	std::cout << "Result: (" << q3.x << ", " << q3.y << ", " << q3.z << ", " << q3.w << ")" << std::endl;
+
+
+	q3 = q3 * Quaternion::identity();
+	std::cout << "Result: (" << q3.x << ", " << q3.y << ", " << q3.z << ", " << q3.w << ")" << std::endl;
 
 
 	return 0;
