@@ -1,1 +1,1 @@
-g++ -o quaterion.exe quaterion.cpp
+g++ -o quaterion quaterion.cpp
